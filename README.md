@@ -2,7 +2,7 @@
 Chat app built in React using Sendbird chat integration. Intended for clients and therapists to send messages in real time.
 This is the React Native implementation for the mobile app.
 
-## Available Scripts
+## Install and Run Scripts
 First, install Expo CLI globally:
 
 ### `npm install -g expo-cli`
@@ -32,6 +32,8 @@ I ran my implementation on my own Android Device via the Expo Client, but if you
 
 If you have a phone or computer that runs on Mac/iOS, click [here] (https://docs.expo.io/workflow/ios-simulator/) on how to configure and run your Expo app through iOS Simulator.
 I do not have an Apple device. I tested my app's implementation on iOS to the best of my ability through [Expo Snack] (https://snack.expo.io/).
+
+## Build Script
 
 ### `yarn build`
 

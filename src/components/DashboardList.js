@@ -19,12 +19,11 @@ const DashboardList = (props) => {
     }
 
     let chatList = channels.map((channel => {
+        friendName(channel);
         return (
-            <View key={friendName(channel)}>
-                <TouchableOpacity onPress= {goToChat} >
-                    <Text>{_friendId}</Text>
-                </TouchableOpacity>
-            </View>
+            <TouchableOpacity onPress= {goToChat} >
+                <Text>{_friendId}</Text>
+            </TouchableOpacity>
         );
     }))
 

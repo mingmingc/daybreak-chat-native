@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ScrollList } from 'react-native';
-import { USER_ID } from '../const';
-import { _getSbInstance } from '../utils';
+import { Text, StyleSheet, ScrollView, LogBox } from 'react-native';
+import Sendbird from 'sendbird';
+import { USER_ID, APP_ID } from '../const';
 import DashboardList from './DashboardList';
+import Connect from '../Connect';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -10,25 +11,25 @@ class Dashboard extends Component {
     this.state = {
         channels: []
     }
-    this.userId = USER_ID;
-    this.sb = _getSbInstance();
-  
     this.getChannels = this.getChannels.bind(this);
   }
 
   getChannels() {
-    let allUserChannels = this.sb.GroupChannel.createMyGroupChannelListQuery();
-    allUserChannels.includeEmpty = true;
-    allUserChannels.userIdsIncludeFilter = [this.userId];
-    allUserChannels.next((myChannels, error) => {
-      if (error) {
-        return error;
-      } else {
-        console.log(myChannels);
-        this.setState({channels: myChannels})
-      }
-    });
-  }
+    const sb = Sendbird.getInstance();
+    // .then(() => {
+      let allUserChannels = sb.GroupChannel.createMyGroupChannelListQuery();
+      allUserChannels.includeEmpty = true;
+      allUserChannels.userIdsIncludeFilter = [ USER_ID ];
+      allUserChannels.next((myChannels, error) => {
+        if (error) {
+          console.log('Get Channels error: ' + error);
+          return;
+        } else {
+          this.setState({channels: myChannels})
+        }
+      });
+    // });
+  };
 
   componentDidMount() { 
       this.getChannels();
@@ -36,12 +37,10 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <View>
+      <ScrollView>
         <Text style={styles.titleText}> Welcome, { USER_ID } </Text>
-          <ScrollList>
-            <DashboardList channels={this.state.channels}/>
-          </ScrollList>
-      </View>
+        <DashboardList channels={this.state.channels}/>
+      </ScrollView>
     )
   }
 }
